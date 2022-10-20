@@ -65,7 +65,7 @@ def checkValidDirection():
     keyInput = int(input("어느 방향으로 이동하시겠습니까?(숫자만 가능)"))
 
     # 원본을 다시 복사해놓고 키 입력을 받으면 새롭게 출력
-    map2 = deepcopy(map) 
+    map2 = deepcopy(map)
                 
     if keyInput == 1:
         if map2[player_x][player_y+1] == legend["wall"]:
