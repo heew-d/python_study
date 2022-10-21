@@ -74,9 +74,9 @@ def checkValidDirection():
             player_y = player_y+1
             map2[player_x][player_y] = legend["player"]
         elif map2[player_x][player_y+1] == legend["finish"]:
-            map2[player_x][player_y+1] = legend["player"]
+            player_y = player_y+1
+            map2[player_x][player_y] = legend["player"]
             print("미로 탈출!!!")
-
 
     elif keyInput == 2:
         if map2[player_x][player_y-1] == legend["wall"]:
@@ -85,7 +85,8 @@ def checkValidDirection():
             player_y = player_y-1
             map2[player_x][player_y] = legend["player"] 
         elif map2[player_x][player_y-1] == legend["finish"]:
-            map2[player_x][player_y-1] = legend["player"]
+            player_y = player_y-1
+            map2[player_x][player_y] = legend["player"]
             print("미로 탈출!!!")
 
     elif keyInput == 3:
@@ -95,7 +96,8 @@ def checkValidDirection():
             player_x = player_x+1
             map2[player_x][player_y] = legend["player"]
         elif map2[player_x+1][player_y] == legend["finish"]:
-            map2[player_x+1][player_y] = legend["player"]
+            player_x = player_x+1
+            map2[player_x][player_y] = legend["player"]
             print("미로 탈출!!!")
 
     elif keyInput == 4:
@@ -105,7 +107,8 @@ def checkValidDirection():
             player_x = player_x-1
             map2[player_x][player_y] = legend["player"]
         elif map2[player_x-1][player_y] == legend["finish"]:
-            map2[player_x-1][player_y] = legend["player"]
+            player_x = player_x-1
+            map2[player_x][player_y] = legend["player"]
             print("미로 탈출!!!")
     else:
         print("1~4사이의 숫자만 입력하시오.")   
