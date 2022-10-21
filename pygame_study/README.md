@@ -4,7 +4,7 @@
 pip3 install pygame
 ```
 
-#설치 되었는지 알아보기
+# 설치 되었는지 알아보기
 ```bash
 python -m pygame.examples.aliens
 ```
