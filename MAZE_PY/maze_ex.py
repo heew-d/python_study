@@ -44,7 +44,7 @@ def loadMap():
             if -1 < findedIndex: 
                 # 시작위치 파악, 기억
                 # (y,findedIndex)
-                print(f'({y},{findedIndex}) 시작지점')
+                # print(f'({y},{findedIndex}) 시작지점')
                 startPos = (y,findedIndex) #값을 설정
                 pass
             
@@ -52,7 +52,7 @@ def loadMap():
             if -1 < findedIndex:
                 # 종료위치 파악, 기억
                 # (y,findedIndex)
-                print(f'({y},{findedIndex}) 도착지점')
+                # print(f'({y},{findedIndex}) 도착지점')
                 finishPos = (y,findedIndex) #값을 설정
                 pass
 
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     # 플레이 (runloop)
     while True:
         # 지도와 플레이어의 위치표시*
-        # os.system('clear') # 화면 지우기
+        os.system('clear') # 화면 지우기
         display()
         
         # 플레이어의 현재위치가 종료위치인지 확인 (확인된 결과에 따라 계속진행할지 종료할지 선택)
