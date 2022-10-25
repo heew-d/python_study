@@ -1,17 +1,18 @@
 import os
 import time
+import random
 
-map = []
+map:list[str] = []
 # map = ['oxxoooxx','oxxoooxx']
 # map = [[0,0,0,0,1,0,1],[0,0,0,0,1,0,1]]]
 POSITION_Y = 0
 POSITION_X = 1
+
 startPos = (0,0) # 2차원 좌표로 사용, 그래서 항목이 2개인 튜플
 finishPos = (0,0) # 2차원 좌표로 사용, 그래서 항목이 2개인 튜플
 playerPos = [0,0]
 
 def loadMap():
-
     global startPos
     global finishPos
     # global map
@@ -62,7 +63,7 @@ def loadMap():
         print(map)
         # print(f'startPos: {startPos}')
         # print(f'finishPos: {finishPos}')
-    
+
     pass
 
 def display():
@@ -72,7 +73,6 @@ def display():
     #     for item in line:
     #         print(item, end=' ')
     #     print()
-
     for y in range(len(map)):
         line = map[y]
         for x in range(len(line)):
@@ -91,25 +91,38 @@ def display():
     pass
 
 def checkValidDirection():
-    global move
 
-    selection = input("어느 방향으로 이동하시겠습니까?(숫자만 가능)")
-    if selection.isdigit():
-       '''
-        1. 동쪽으로 이동
-        2. 서쪽으로 이동
-        3. 남쪽으로 이동
-        4. 북쪽으로 이동
-        '''
-    # (-1,0), (0,1), (1,0), (0,-1)
+    # prompt = '''
+    #     1. 북쪽으로 이동
+    #     2. 동쪽으로 이동
+    #     3. 남쪽으로 이동
+    #     4. 서쪽으로 이동
+    #     '''
+    # print(prompt)
+    # selection = input("어느 방향으로 이동하시겠습니까?(숫자만 가능)")
+    # if selection.isdigit():
+    #     pass
+    # # (-1,0), (0,1), (1,0), (0,-1)
     
-    offset = [[-1,0],[0,1],[1,0],[0,-1]]
-
-    if selection == 4:
-        move = playerPos.append([x+y for x,y in zip(playerPos, offset[0])])
-    print(move)
-
+    # offset = [[-1,0],[0,1],[1,0],[0,-1]]
     pass
+
+def displaySelection():
+    
+    prompt = '''
+    1. 북쪽으로 이동
+    2. 동쪽으로 이동
+    3. 남쪽으로 이동
+    4. 서쪽으로 이동
+
+    이동 할 방향을 선택해 주세요'''
+    print(prompt, end="")
+
+    # 사용자의 입력을 기다리며 프로그램의 진행은 블록
+    # 사용자가 입력을 하고 엔터를 입력해야 진행
+    choice = input()
+    print("사용자 입력:", choice)
+    return int(choice)
 
 def prepares():
     # 초기 구동시 세팅해야할 처리들
@@ -146,11 +159,42 @@ if __name__ == "__main__":
         # 지도와 플레이어의 위치표시*
         os.system('clear')
         display()
-        checkValidDirection()
+        
+        # 플레이어가 이동할 수 있는 방향을 파악하고 선택지를 표시 (4개의 선택지를 항상 표시)
+        displaySelection()
 
-        # 플레이어가 이동할 수 있는 방향을 파악하고 선택지를 표시 
         # 플레이어가 선택한 방향으로 플레이어 이동 (상태를 변경) (플레이어를 어떻게 이동시킬지)
+        # playerPos는 두개의 항목을 갖는 리스트, 0번 인덱스는 y축 값, 1번 인덱스는 x축 값, [y,x]
+        # 해당 좌표의 위치는 지도(map:[])의 좌표로 동기되어 있음
+        # selection = 1
+        selection = random.randrange(1,5)
+        
+        # 1==북 , 2 == 동 , 3 == 남, 4== 서
+        if selection == 1:
+            #북
+            playerPos[POSITION_Y] = playerPos[POSITION_Y] + -1
+            pass
+        elif selection == 2:
+            # 동
+            playerPos[POSITION_X] = playerPos[POSITION_X] + 1
+            pass
+        elif selection == 3:
+            # 남
+            playerPos[POSITION_Y] = playerPos[POSITION_Y] + 1
+            pass
+        elif selection == 4:
+            # 서
+            playerPos[POSITION_X] = playerPos[POSITION_X] + -1
+            pass
+        else:
+            print("잘못 입력했습니다. 1~4까지의 숫자만 입력하세요.")
+            time.sleep(2)
+
+        # playerPos[POSITION_Y] = playerPos[POSITION_Y] + -1
+        # playerPos[POSITION_X] = playerPos[POSITION_X] + 0 
+
         # 플레이어의 현재위치가 종료위치인지 확인 (확인된 결과에 따라 계속진행할지 종료할지 선택)
+        time.sleep(1)
         pass
 
     pass
