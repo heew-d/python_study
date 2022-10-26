@@ -2,7 +2,7 @@ import os
 import time
 import random
 
-map:list[str] = []
+map:list = []
 # map = ['oxxoooxx','oxxoooxx']
 # map = [[0,0,0,0,1,0,1],[0,0,0,0,1,0,1]]]
 POSITION_Y = 0
