@@ -151,47 +151,74 @@ def validation(yIndex, xIndex):
     
     return valid
 
+offsets = ((-1,0), (0,1), (1,0), (0,-1))
+directionDicts = (
+    {
+        'offset':(-1,0),
+        'directionName':'북'
+    },
+    {
+        'offset':(0,1),
+        'directionName':'동'
+    },
+    {
+        'offset':(1,0),
+        'directionName':'남'
+    },
+    {
+        'offset':(0,-1),
+        'directionName':'서'
+    }
+)
+# 다수의 값을 넣을 수 있는 자료형
+# 리스트, 튜플, 딕셔너리
 
 def checkValidDirection(selection):
     valid = False
-    directionName = ''
+    # directionName = ''
 
-    if selection == 1:
-        # 플레이어 기준 북쪽 한칸 방향이 갈 수 있는지 파악
-        yIndex = playerPos[POSITION_Y] + -1
-        xIndex = playerPos[POSITION_X] + 0
-        valid = validation(yIndex, xIndex)
-        directionName = '북'
+    dict = directionDicts[selection - 1]
+    offset = dict['offset']
+    directionName = dict['directionName']
+    yIndex = playerPos[POSITION_Y] + offset[POSITION_Y]
+    xIndex = playerPos[POSITION_X] + offset[POSITION_X]
 
-    if selection == 2:
-        # 플레이어 기준 동쪽 한칸 방향이 갈 수 있는지 파악
-        yIndex = playerPos[POSITION_Y] + 0
-        xIndex = playerPos[POSITION_X] + 1
-        valid = validation(yIndex, xIndex)
-        directionName = '동'
+    # if selection == 1:
+    #     # 플레이어 기준 북쪽 한칸 방향이 갈 수 있는지 파악
+    #     yIndex = playerPos[POSITION_Y] + -1
+    #     xIndex = playerPos[POSITION_X] + 0
+    #     valid = validation(yIndex, xIndex)
+    #     directionName = '북'
+
+    # if selection == 2:
+    #     # 플레이어 기준 동쪽 한칸 방향이 갈 수 있는지 파악
+    #     yIndex = playerPos[POSITION_Y] + 0
+    #     xIndex = playerPos[POSITION_X] + 1
+    #     valid = validation(yIndex, xIndex)
+    #     directionName = '동'
             
-    if selection == 3:
-        # 플레이어 기준 남쪽 한칸 방향이 갈 수 있는지 파악
-        yIndex = playerPos[POSITION_Y] + 1
-        xIndex = playerPos[POSITION_X] + 0
-        valid = validation(yIndex, xIndex)
-        directionName = '남'
+    # if selection == 3:
+    #     # 플레이어 기준 남쪽 한칸 방향이 갈 수 있는지 파악
+    #     yIndex = playerPos[POSITION_Y] + 1
+    #     xIndex = playerPos[POSITION_X] + 0
+    #     valid = validation(yIndex, xIndex)
+    #     directionName = '남'
 
-    if selection == 4:
-        # 플레이어 기준 서쪽 한칸 방향이 갈 수 있는지 파악
-        yIndex = playerPos[POSITION_Y] + 0
-        xIndex = playerPos[POSITION_X] + -1
-        valid = validation(yIndex, xIndex)
-        directionName = '서'
+    # if selection == 4:
+    #     # 플레이어 기준 서쪽 한칸 방향이 갈 수 있는지 파악
+    #     yIndex = playerPos[POSITION_Y] + 0
+    #     xIndex = playerPos[POSITION_X] + -1
+    #     valid = validation(yIndex, xIndex)
+    #     directionName = '서'
 
     resultDict = {
         'valid' : valid,
         'directionName' : directionName,
+        'offset' : offset,
     }
     # resultTup = (valid, directionName)
     return resultDict
 
-offsets = ((-1,0), (0,1), (1,0), (0,-1))
 
 def makePlayerOffsetWithSelection(selection):
     # offset ((-1,0), (0,1), (1,0), (0,-1))
@@ -251,7 +278,6 @@ if __name__ == "__main__":
             print("종료합니다")
             break
 
-
         # --- 사용자가 선택한 방향이 올바른 방향인지 확인 ----------
         # print("maxRow: ", maxRow)
         # print("maxCol: ", maxCol)
@@ -260,7 +286,8 @@ if __name__ == "__main__":
 
         valid = validDict['valid']
         directionName = validDict['directionName']
-        errorMessage = ''
+        offset = validDict['offset']
+        # errorMessage = ''
 
         if not valid:
             print(f"갈 수 없는 방향({directionName})")
@@ -268,12 +295,16 @@ if __name__ == "__main__":
             continue       
         
         # --- 플레이어가 선택한 방향으로 플레이어 이동 (상태를 변경) (플레이어를 어떻게 이동시킬지)
+        playerPos[POSITION_Y] = playerPos[POSITION_Y] + offset[POSITION_Y]
+        playerPos[POSITION_X] = playerPos[POSITION_X] + offset[POSITION_X]
+
         # playerPos는 두개의 항목을 갖는 리스트, 0번 인덱스는 y축 값, 1번 인덱스는 x축 값, [y,x]
         # 해당 좌표의 위치는 지도(map:[])의 좌표로 동기되어 있음
         
-        nextOffset = makePlayerOffsetWithSelection(selection)
-        playerPos[POSITION_Y] = playerPos[POSITION_Y] + nextOffset[POSITION_Y]
-        playerPos[POSITION_X] = playerPos[POSITION_X] + nextOffset[POSITION_X]
+        # nextOffset = makePlayerOffsetWithSelection(selection)
+        # playerPos[POSITION_Y] = playerPos[POSITION_Y] + nextOffset[POSITION_Y]
+        # playerPos[POSITION_X] = playerPos[POSITION_X] + nextOffset[POSITION_X]
+        # ---------------------------
 
         # 1 == 북 , 2 == 동 , 3 == 남, 4 == 서
         # if selection == 1:
