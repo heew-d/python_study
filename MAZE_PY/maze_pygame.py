@@ -16,7 +16,7 @@ pygame.display.set_caption("maze") # 화면 타이틀 설정
 clock = pygame.time.Clock() # 프레임 설정
     
 # 캐릭터 불러오기
-character = pygame.image.load("/home/aa/python_study/python_study/MAZE_PY/robot.png")
+character = pygame.image.load("/Users/heewon/python_study/MAZE_PY/robot.png")
 character_size = character.get_rect().size # 캐릭터 이미지 사이즈 구하기
 character_width = character_size[0] # 캐릭터 가로 크기
 character_height = character_size[1] # 캐릭터 세로 크기

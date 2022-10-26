@@ -228,19 +228,21 @@ if __name__ == "__main__":
         display()
         
         # 플레이어의 현재위치가 종료위치인지 확인 (확인된 결과에 따라 계속진행할지 종료할지 선택)
-        # 플레이어의 y축 값과 종료의 y축 값이 같고, 플레이어의 x축 값과 종료의 x축 값이 같으면 도착한것으로
+        # 플레이어의 y축 값과 종료의 y축 값이 같고, 플레이어의 x축 값과 종료의 x축 값이 같으면 도착
         isFinish = playerPos[POSITION_Y] == finishPos[POSITION_Y] and playerPos[POSITION_X] == finishPos[POSITION_X]
 
         if isFinish:
             print("탈출 성공!!")
             break    
         # 플레이어가 이동할 수 있는 방향을 파악하고 선택지를 표시 (4개의 선택지를 항상 표시)
+        # selection = 1
+        # selection = random.randrange(1,5)
         selection = displaySelection()
 
         # 사용자 선택의 유효성 파악
         # 1 ~ 4번은 유효, 0은 종료, -1 포함 나머지 숫자는 잘못 입력
 
-        if selection <= 0 and selection > 4:
+        if selection < 0 or selection > 4:
             print("잘못 입력했습니다. 1~4까지의 숫자만 입력하세요.")
             time.sleep(2)
             continue
@@ -250,7 +252,7 @@ if __name__ == "__main__":
             break
 
 
-        # 사용자가 선택한 방향이 올바른 방향인지 확인
+        # --- 사용자가 선택한 방향이 올바른 방향인지 확인 ----------
         # print("maxRow: ", maxRow)
         # print("maxCol: ", maxCol)
 
@@ -265,12 +267,10 @@ if __name__ == "__main__":
             time.sleep(2)
             continue       
         
-        # 플레이어가 선택한 방향으로 플레이어 이동 (상태를 변경) (플레이어를 어떻게 이동시킬지)
+        # --- 플레이어가 선택한 방향으로 플레이어 이동 (상태를 변경) (플레이어를 어떻게 이동시킬지)
         # playerPos는 두개의 항목을 갖는 리스트, 0번 인덱스는 y축 값, 1번 인덱스는 x축 값, [y,x]
         # 해당 좌표의 위치는 지도(map:[])의 좌표로 동기되어 있음
-        # selection = 1
-        # selection = random.randrange(1,5)
-
+        
         nextOffset = makePlayerOffsetWithSelection(selection)
         playerPos[POSITION_Y] = playerPos[POSITION_Y] + nextOffset[POSITION_Y]
         playerPos[POSITION_X] = playerPos[POSITION_X] + nextOffset[POSITION_X]
@@ -305,9 +305,7 @@ if __name__ == "__main__":
 
         # time.sleep(1)
         pass
-
     pass
-
 
     #         0        1      2      3 
     # offset ((-1,0), (0,1), (1,0), (0,-1))
