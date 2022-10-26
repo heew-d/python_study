@@ -21,3 +21,36 @@ $ python -m venv venv
 ```bash
 $ python3 -m venv venv
 ```
+
+- 우분투에선 가상환경명령(venv) 설치
+```bash
+$ sudo apt-get install python3-venv
+```
+
+- 가상환경 활성화
+    - 파워쉘
+    ```bash
+    $ ./venv/Scripts/Activate.ps1
+    ```
+    - CMD
+    ```bash
+    $ ./venv/Scripts/activate.bat
+    ```
+    - 윈도우10 이상 사용시 보안설정
+        - 파워쉘을 관리자 권한으로 열고
+        ```bash
+        $ Set-ExecutionPolicy Unrestricted
+        ```$ 
+    $  source ./venv/bin/activate
+    ```
+
+- 가상환경 비활성화
+```bash
+(가상환경이름) $ Deactivate
+```
+
+### pyside2
+- 가상환경에 pyside2 설치
+```bash
+$ pip install pyside2
+```
