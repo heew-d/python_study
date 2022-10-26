@@ -9,3 +9,15 @@
 
 ### pygame study
 - [pygame 연습](./pygame_study)
+
+
+### 가상환경 생성
+- 가상환경 생성
+```bash
+$ python -m venv venv
+```
+
+- 우분투에서 파이썬3을 사용할 때
+```bash
+$ python3 -m venv venv
+```
