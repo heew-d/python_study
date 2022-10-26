@@ -40,10 +40,9 @@ $ sudo apt-get install python3-venv
         - 파워쉘을 관리자 권한으로 열고
         ```bash
         $ Set-ExecutionPolicy Unrestricted
-        ```$ 
+        ```
     $  source ./venv/bin/activate
     ```
-
 - 가상환경 비활성화
 ```bash
 (가상환경이름) $ Deactivate
