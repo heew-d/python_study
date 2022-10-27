@@ -2,7 +2,103 @@ import os
 import time
 import random
 
-map:list = []
+class MazeMap():
+
+    # 속성, 지도 행렬
+    # 함수, 파일에서 지도를 불러오기
+    # 함수, 유효성 확인
+
+    # 함수, 지도 표시
+
+    def __init__(self, filePath = '') -> None:
+        self.map:list = []
+        self.maxCol = 0
+        self.maxRow = 0
+        self.startPos = MazePosition(0,0,"S")
+        self.finishPos = MazePosition(0,0,"F")
+
+        self.loadMap(filePath)
+
+        pass
+
+    def getTile(self, y, x):
+        return self.map[y][x]
+
+    def getLine(self, y):
+        return self.map[y]
+
+    # 함수, 파일에서 지도를 불러오기
+    def loadMap(self, filePath):
+
+        try:
+            # 형렬, 매트릭스
+            # with open('./MAZE_PY/level1.map', 'r') as f:
+            with open(filePath, 'r') as f:
+
+                self.map.clear()
+                # for in  #명확한 제한이 존재할때
+                y=0
+                while True:
+                    line = f.readline().replace('\n','').replace(' ','')
+
+                    # None 일땐 종료
+                    if not line:
+                        break
+
+                    self.map.append(line)
+                    # 해당 문자열안에 S나 F가 있는지 파악하고, 해당 문자의 위치가 어딘지 파악
+                    # 알아낸 위치가 곧 x축의 위치
+                    # str.find() 해당 문자가 있으면 문자의 위치(인덱스)를 리턴하고, 없으면 -1을 리턴
+
+                    findedIndex = line.find('S')
+                    if -1 < findedIndex: 
+                        # 시작위치 파악, 기억
+                        self.startPos.setPosition(y, findedIndex) #값을 설정
+                        pass
+                    
+                    findedIndex = line.find('F')
+                    if -1 < findedIndex:
+                        # 종료위치 파악, 기억
+                        self.finishPos.setPosition(y, findedIndex) #값을 설정
+                        pass
+
+                    self.maxCol = len(line)
+                    y = y + 1
+                    pass
+                
+                self.maxRow = y
+                pass
+
+        except FileNotFoundError as e:
+            print("FileNotFoundError error: ", e)
+            pass
+        except:
+            print("알 수 없는 error")
+            pass
+
+
+    # 갈 수 있는 길인지 검사
+    def validation(self, y, x):
+
+        valid = True
+        # 해당 위치(y,x)의 타일 값을 읽어옴
+        # 1참 -> y가 유요한 범위인지
+        valid = valid and (y >= 0 and y < self.maxRow)
+        # 2참 -> x가 유효한 범위인지
+        valid = valid and (x >= 0 and x < self.maxCol)
+        
+        if not valid:
+            return False
+
+        # tile = mazeMap.map[yIndex][xIndex]
+        tile = mazeMap.getTile(y, x)
+    
+        # 3참 -> 유효한 타일인지
+        # valid = valid and (tile == 'o' or tile == 'S' or tile == 'F')
+        valid = valid and (tile in 'oSF')
+        
+        return valid
+    pass
 
 # 2차원 좌표값 저장, 아이콘
 class MazePosition():
@@ -36,71 +132,26 @@ class MazeOffset():
         self.name = name
         pass
 
-startPos = MazePosition(0,0,"S")
-finishPos = MazePosition(0,0,"F")
+mazeMap = MazeMap()
 playerPos = MazePosition(0,0,"P")
-
-maxRow = 0
-maxCol = 0
-
-# map 불러오기
-def loadMap():
-    global startPos, finishPos, maxRow, maxCol
-
-    # 형렬, 매트릭스
-    with open('./MAZE_PY/level1.map', 'r') as f:
-        # for in  #명확한 제한이 존재할때
-        y=0
-        while True:
-            line = f.readline().replace('\n','').replace(' ','')
-
-            # None 일땐 종료
-            if not line:
-                break
-
-            map.append(line) # 됨
-
-            # 해당 문자열안에 S나 F가 있는지 파악하고, 해당 문자의 위치가 어딘지 파악
-            # 알아낸 위치가 곧 x축의 위치
-            # str.find() 해당 문자가 있으면 문자의 위치(인덱스)를 리턴하고, 없으면 -1을 리턴
-
-            findedIndex = line.find('S')
-            if -1 < findedIndex: 
-                # 시작위치 파악, 기억
-                startPos.setPosition(y, findedIndex) #값을 설정
-                pass
-            
-            findedIndex = line.find('F')
-            if -1 < findedIndex:
-                # 종료위치 파악, 기억
-                finishPos.setPosition(y, findedIndex) #값을 설정
-                pass
-
-            maxCol = len(line)
-            y = y + 1
-            pass
-        maxRow = y
-
-    pass
 
 # 지도 표시
 def display():
 
     # 지도 및 플레이어의 현재위치
-    for y in range(len(map)):
-        line = map[y] # 한줄 단위로 읽어옴
-        for x in range(len(line)):
-            item = line[x]
-            # print(f'({y},{x}) {item}', end=' ')
+    for y in range(mazeMap.maxRow):
+        for x in range(mazeMap.maxCol):
+
+            tile = mazeMap.getTile(y,x)
             if playerPos.y == y and playerPos.x == x:
                 # 현재타일은 플레이어의 위치
-                # print('P', end=' ')
                 print(playerPos.icon, end=' ')
             else:
                 # 플레이어 위치가 아닌 일반 타일
-                print(item, end=' ')
+                print(tile, end=' ')
         print()
-    print("플레이어:",playerPos)
+
+    print("플레이어: ",playerPos)
     pass
 
 def displaySelection() -> int:
@@ -132,32 +183,18 @@ def prepares():
 
     #지도불러오기
     #시작위치와 종료위치 파악 (표시x, 기록만)
-    loadMap()
+    mazeMap.loadMap('./MAZE_PY/level1.map')
+
+    # mapLevel2 = MazeMap('./level2.map')
+    # mapLevel3 = MazeMap('./level3.map')
+    startPos = mazeMap.startPos
     
     #플레이어의 현재위치를 지도의 시작위치로 설정 (표시x, 기록만)
     playerPos.setPosition(startPos.y, startPos.x)
+
     pass
 
 
-# 갈 수 있는 길인지 검사
-def validation(yIndex, xIndex):
-
-    valid = True
-    # 해당 위치(y,x)의 타일 값을 읽어옴
-    # 1참 -> y가 유요한 범위인지
-    valid = valid and (yIndex >= 0 and yIndex < maxRow)
-    # 2참 -> x가 유효한 범위인지
-    valid = valid and (xIndex >= 0 and xIndex < maxCol)
-    
-    if not valid:
-        return False
-
-    tile = map[yIndex][xIndex]
-   
-    # 3참 -> 유효한 타일인지
-    valid = valid and (tile == 'o' or tile == 'S' or tile == 'F')
-    
-    return valid
 
 # offsets = ((-1,0), (0,1), (1,0), (0,-1))
 
@@ -166,7 +203,7 @@ eastOffset = MazeOffset(0, 1, '동')
 southOffset = MazeOffset(1, 0, '남')
 westOffset = MazeOffset(0, -1, '서')
 
-offsets = (
+OFFSETS = (
     northOffset,
     eastOffset, 
     southOffset,
@@ -179,11 +216,11 @@ offsets = (
 def checkValidDirection(selection):
     valid = False
 
-    offset = offsets[selection - 1]
+    offset = OFFSETS[selection - 1]
 
     yIndex = playerPos.y + offset.y
     xIndex = playerPos.x + offset.x
-    valid = validation(yIndex, xIndex)
+    valid = mazeMap.validation(yIndex, xIndex)
 
     resultDict = {
         'valid' : valid,
@@ -209,7 +246,7 @@ if __name__ == "__main__":
         # 플레이어의 y축 값과 종료의 y축 값이 같고, 플레이어의 x축 값과 종료의 x축 값이 같으면 도착
         # isFinish = playerPos.y == finishPos.y and playerPos.x == finishPos.x
         # if isFinish:
-        if playerPos == finishPos:
+        if playerPos == mazeMap.finishPos:
             print("탈출 성공!!")
             break    
         # 플레이어가 이동할 수 있는 방향을 파악하고 선택지를 표시 (4개의 선택지를 항상 표시)
@@ -245,8 +282,6 @@ if __name__ == "__main__":
         
         # --- 플레이어가 선택한 방향으로 플레이어 이동 (상태를 변경) (플레이어를 어떻게 이동시킬지)
         playerPos.move(offset)
-        # playerPos.y = playerPos.y + offset.y
-        # playerPos.x = playerPos.x + offset.x
-
+        
         pass
     pass
