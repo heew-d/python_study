@@ -10,6 +10,9 @@
 ### pygame study
 - [pygame 연습](./pygame_study)
 
+### pyside2
+- [pyside2 관련] (https://wikidocs.net/35742)
+
 
 ### 가상환경 생성
 - 가상환경 생성
