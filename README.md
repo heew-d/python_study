@@ -56,3 +56,8 @@ $ sudo apt-get install python3-venv
 ```bash
 $ pip install pyside2
 ```
+
+### pyserial 시리얼 통신
+```bash
+pip install pyserial
+```
